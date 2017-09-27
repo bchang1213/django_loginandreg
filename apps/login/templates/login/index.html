@@ -2,74 +2,33 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Registration Form</title>
-	<style media='screen'>
-	label{
-		display: block;
-		width:280px;
-		text-align: right;
-	}
-	fieldset, form {
-		display: inline-block;
-	}
-	li.error{
-		color: red ;
-	}
-	li.success{
-		color:green;
-	}
-</style>
+	<title>Home Page</title>
 </head>
 <body>
-	{% if messages %}
-	<ul class="messages">
-	{% for message in messages %}
-		<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-	{% endfor %}
-	</ul>
-	{% endif %}
-
-	<form action="/register" method="POST">
-		{% csrf_token %}
-		<fieldset>
-			<legend>Register</legend>
-			<label>First Name:
-				<input type="text" name="first_name">
-			</label>
-			<label>Last Name:
-				<input type="text" name="last_name">
-			</label>
-			<label>Email:
-				<input type="text" name="email">
-			</label>
-<!-- 			<label>Birthday:
-				<input type="date" name="dob">
-			</label> -->
-			<label>Password:
-				<input type="text" name="password">
-			</label>
-			<label>Confirm Password:
-				<input type="text" name="passconf">
-			</label>
-			<label>
-				<input type="submit" values="Register">
-			</label>
-		</fieldset>
-	</form>
-	<form action="/login" method="POST">
-		{% csrf_token %}
-		<fieldset>
-			<legend>Login</legend>
-			<label>Email:
-				<input type="text" name="email">
-			</label>
-			<label>Password:
-				<input type="text" name="password">
-			</label>
-			<label>
-				<input type="submit" values="Login">
-			</label>
-		</fieldset>
-	</form>
+	<div class='container'>
+		<header>
+			<h3>Test App</h3>
+			<a href="/">Home</a>
+			<a href="/signin">Sign In</a>
+		</header>
+		<main>
+			<div class='banner'>
+				<h4>Welcome to the Test</h4>
+				<p>We're goign to build a cool application using an MTV framework! This application was built with Django by Brian Chang.</p>
+			</div>
+			<div class="info">
+				<h4>Manage Users</h4>
+				<p>Using this application, you'll learn how to add, remove, and edit users for the application.</p>
+			</div>
+			<div class="info">
+				<h4>Leave Messages</h4>
+				<p>Users will be able to leave a message to another user using the application.</p>
+			</div>
+			<div class="info">
+				<h4>Edit User Information</h4>
+				<p>Admins will be able to edit another user's information (email address, first name, last name, etc.)</p>
+			</div>
+		</main>
+	</div>
 </body>
 </html>
