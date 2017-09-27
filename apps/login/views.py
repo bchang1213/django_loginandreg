@@ -10,22 +10,8 @@ from django.core.urlresolvers import reverse
 def index(request):
  	return render(request, "login/index.html")
 
-def register(request):
-	errors = User.objects.basic_validator(request.POST)
-	if len(errors):
-		for tag, error in errors.iteritems():
-			messages.error(request, error, extra_tags=tag)
-			return redirect('/')
-	else:
-		user = User.objects.create()
-		user.first_name = request.POST['first_name']
-		user.last_name = request.POST['last_name']
-		user.email =request.POST['email']
-		# user.dob =request.POST['dob']
-		user.password =bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt())
-		user.save()
-		messages.success(request, 'User created. Please login!')
-		return redirect('/')
+def gosignin(request):
+	return render(request, "login/signin.html")
 
 def login(request):
 	errors = User.objects.login_validator(request.POST)
@@ -42,6 +28,27 @@ def login(request):
 			else:
 				messages.success(request, 'Login Successful!')
 				return redirect(reverse('success',kwargs ={'user_id':user.id}))
+
+
+def goregister(request):
+	return render(request, "login/register.html")
+
+def register(request):
+	errors = User.objects.basic_validator(request.POST)
+	if len(errors):
+		for tag, error in errors.iteritems():
+			messages.error(request, error, extra_tags=tag)
+			return redirect('/')
+	else:
+		user = User.objects.create()
+		user.first_name = request.POST['first_name']
+		user.last_name = request.POST['last_name']
+		user.email =request.POST['email']
+		# user.dob =request.POST['dob']
+		user.password =bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt())
+		user.save()
+		messages.success(request, 'User created. Please login!')
+		return redirect('/')
 
 def success(request, user_id):
 	context = {
