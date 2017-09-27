@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>success</title>
+	{% load static %}
+<!-- The line above tells Django to be ready to listen for static files -->
+	<link rel="stylesheet" href="{% static 'login/css/success.css' %}" media="screen" title="no title"  charset="utf-8">
+<!-- Put the static files in the static folder inside your app.  Django collects files within all static folders and puts them within a single folder --> 
+</head>
+<body>
+	<div class="container">
+		<header>
+			<h4>Test App</h4>
+			<a href="/">Home</a>
+			<a href="/gosignin" class="signin">Sign In</a>
+		</header>
+	<main>
+		<div class="top">
+			<h5>Manage Users</h5>
+			<a href="/addnewuser"><button>Add New</button></a>
+		</div>
+		<table>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>email</th>
+				<th>created_at</th>
+				<th>user level</th>
+				<th>actions</th>
+			</tr>
+			{% for user in users%}
+			<tr>
+				<td>{{user.id}}</td>
+				<td><a href="users/{{user.id}}">{{user.first_name}} {{user.last_name}}</a></td>
+				<td>{{user.email}}</td>
+				<td>{{user.created_at}}</td>
+				<td>{{user.userlevel}}</td>
+				<td>
+					<a href="edit/{{user.id}}">Edit</a>
+					<a href="remove/{{user.id}}">Remove</a>
+				</td>
+				
+			</tr>
+			{% endfor %}
+		</table>
+	</main>
+	</div>
+</body>
+</html>

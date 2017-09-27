@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Register</title>
+	<title>Add New User</title>
 	{% load static %}
 <!-- The line above tells Django to be ready to listen for static files -->
 	<link rel="stylesheet" href="{% static 'login/css/signin.css' %}" media="screen" title="no title"  charset="utf-8">
@@ -12,19 +12,10 @@
 	<header>
 		<h4>Test App</h4>
 		<a href="/">Home</a>
-		<a href="/gosignin" class="signin">Sign In</a>
+		<a href="/logoff" class="slogoff">Log Off</a>
 	</header>
 
-	{% if messages %}
-	<ul class="messages">
-		{% for message in messages %}
-		{% if message.tags %}
-		<li class="{{ message.tags }}">{{ message }}</li>
-		{% endif %}
-		{% endfor %}
-	</ul>
-	{% endif %}
-
+	<h5>Add New User</h5>
 	<form action="/register" method="POST">
 		{% csrf_token %}
 		<fieldset>
@@ -49,7 +40,6 @@
 			</label>
 		</fieldset>
 	</form>
-
-	<a href="/gosignin" class="signinhere">Already have an account? Login</a>
+	<a href="/dashboard" class="returntodash"><button>Return to Dashboard</button></a>
 </body>
 </html>

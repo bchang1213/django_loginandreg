@@ -26,27 +26,6 @@ class UserManager(models.Manager):
 		if not EMAIL_REGEX.match(postData['email']):
 			errors['email']="Please enter a valid email"
 
-# VALIDATING BIRTHDAY
-		# if len(postData['dob']) == 0:
-		# 	errors['dob']= 'Please enter your date of birth.'
-		# elif not DATE_STR_REGEX.match(postData['dob']):
-		# 	errors['dob']= "Please use date picker."
-		# else:
-		# 	try:
-		# 		dob = datetime.datetime.strptime(postData['dob'], "%m-%d-%Y")
-		# 		cutoff_date = datetime.datetime.now() - datetime.timedelta(days=18*365)
-		# 		now = datetime.datetime.now()
-
-		# 		if dob > now:
-		# 			errors['doberror']="You cannot be born in the future."
-
-		# 		if dob > cutoff_date:
-		# 			errors['doberror1']="You must be 18 join this site."
-
-		# 	except Exception as date_error:
-		# 		print date_error
-		# 		errors['doberror2']='Please use the date picker.'
-
 # VALIDATING PASSWORD
 		if len(postData['password']) == 0:
 			errors['password']="Please enter a password"
@@ -65,13 +44,13 @@ class UserManager(models.Manager):
 
 			if postData['password'] != postData['passconf']:
 				errors['password4']= 'Password and confirmation fields must match.'
-
 		return errors
 
 class User(models.Model):
 	first_name = models.CharField(max_length=255)
 	last_name = models.CharField(max_length=255)
 	email = models.CharField(max_length=255)
+	userlevel = models.CharField(max_length=255)
 	# dob = models.DateField(auto_now=False, auto_now_add=False)
 	password = models.CharField(max_length=255)
 	created_at = models.DateTimeField(auto_now_add = True)
@@ -79,3 +58,14 @@ class User(models.Model):
 	objects = UserManager()
 	def __repr__(self):
 		return ("<User object: id:{} {} {}>".format(self.id, self.first_name, self.last_name))
+
+class Message(models.Model):
+	message = models.TextField()
+	user = models.ForeignKey(User, related_name = "messages")
+
+class Comment(models.Model):
+	comment = models.TextField()
+	user = models.ForeignKey(User, related_name = "comments")
+	message = models.ForeignKey(Message, related_name="comments")
+
+
