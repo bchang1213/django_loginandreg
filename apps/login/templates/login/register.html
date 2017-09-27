@@ -17,11 +17,9 @@
 
 	{% if messages %}
 	<ul class="messages">
-		{% for message in messages %}
-		{% if message.tags %}
-		<li class="{{ message.tags }}">{{ message }}</li>
-		{% endif %}
-		{% endfor %}
+	{% for message in messages %}
+		<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+	{% endfor %}
 	</ul>
 	{% endif %}
 
@@ -36,13 +34,13 @@
 				<input type="text" name="last_name">
 			</label>
 			<label>Email:
-				<input type="text" name="email">
+				<input type="email" name="email">
 			</label>
 			<label>Password:
-				<input type="text" name="password">
+				<input type="password" name="password">
 			</label>
 			<label>Confirm Password:
-				<input type="text" name="passconf">
+				<input type="password" name="passconf">
 			</label>
 			<label>
 				<input type="submit" value="Register">

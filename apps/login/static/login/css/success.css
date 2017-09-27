@@ -7,6 +7,10 @@ header{
 	border-bottom: 2px solid black;
 }
 
+a.logout{
+	margin-left: 100px;
+}
+
 header h4, a{
 	display: inline;
 }

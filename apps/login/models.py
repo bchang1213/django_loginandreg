@@ -1,5 +1,4 @@
 from __future__ import unicode_literals
-
 from django.db import models
 import re
 
@@ -61,10 +60,15 @@ class User(models.Model):
 
 class Message(models.Model):
 	message = models.TextField()
+	created_at = models.DateTimeField(auto_now_add = True)
+	updated_at = models.DateTimeField(auto_now = True)
 	user = models.ForeignKey(User, related_name = "messages")
+	where = models.ForeignKey(User, related_name = "wall")
 
 class Comment(models.Model):
 	comment = models.TextField()
+	created_at = models.DateTimeField(auto_now_add = True)
+	updated_at = models.DateTimeField(auto_now = True)
 	user = models.ForeignKey(User, related_name = "comments")
 	message = models.ForeignKey(Message, related_name="comments")
 

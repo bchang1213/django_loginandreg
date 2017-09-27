@@ -11,8 +11,8 @@ header h4, a{
 	display: inline;
 }
 
-a.signin{
-	margin-left: 330px;
+header a.logout{
+	margin-left: 100px;
 }
 
 p{

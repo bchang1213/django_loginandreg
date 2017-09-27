@@ -2,8 +2,7 @@
 from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.messages import error
-from .models import User, Message, Comment
+from .models import *
 import bcrypt
 from django.core.urlresolvers import reverse
 
@@ -35,6 +34,10 @@ def login(request):
 					return	redirect('/dashboard')
 					# return redirect(reverse('success',kwargs ={'user_id':user.id}))
 
+def logout(request):
+	del request.session['user']
+	return redirect('/')
+
 def goregister(request):
 	return render(request, "login/register.html")
 
@@ -45,7 +48,7 @@ def register(request):
 	errors = User.objects.basic_validator(request.POST)
 	if len(errors):
 		for tag, error in errors.iteritems():
-			messages.error(request, error)
+			messages.error(request, error, extra_tags= tag)
 			return redirect('/goregister')
 	else:
 		user = User.objects.create()
@@ -65,21 +68,26 @@ def dashboard(request):
 		"users": User.objects.all()
 	}
 	if theuser.userlevel == "normal":
-		return render(request, "login/success.html", context)
+		return render(request, "login/normaldashboard.html", context)
 	if theuser.userlevel == "admin":
 		return render(request,"login/userdashboard.html", context)
 
 def show(request, user_id):
 	context = {
-		'theuser' : User.objects.get(id=user_id),
-		'themessages': Message.objects.all(),
-		'comments': Comment.objects.get(message_id = message.id),
+		'user' : User.objects.get(id=user_id),
+		'themessages': Message.objects.filter(where_id = user_id),
+		'comments': Comment.objects.all(),
 	}
 
 	return	render(request, "login/user.html", context)
 
-def messages(request, user_id):
+def posts(request, user_id):
 	user1 = User.objects.get(id=request.session['user'])
-	message = Message.objects.create(message =request.POST['message'], user_id = user1.id)
+	message = Message.objects.create(message =request.POST['message'], user_id = user1.id, where_id=user_id)
 	message.save()
 	return redirect(reverse('users',kwargs ={'user_id':user_id}))
+
+def comments(request, user_id):
+	comment = Comment.objects.create(comment=request.POST['comment'], user= User.objects.get(id=request.session['user']), message = Message.objects.get(id=request.POST['message_id']))
+	return redirect(reverse('users',kwargs ={'user_id':user_id}))
+	
