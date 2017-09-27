@@ -20,7 +20,7 @@ def login(request):
 	if len(errors):
 		for tag, error in errors.iteritems():
 			messages.error(request, error, extra_tags=tag)
-			return redirect('/gosignin')
+		return redirect('/gosignin')
 	else:
 		user = User.objects.get(email=request.POST['email'])
 		if user:
@@ -49,7 +49,7 @@ def register(request):
 	if len(errors):
 		for tag, error in errors.iteritems():
 			messages.error(request, error, extra_tags= tag)
-			return redirect('/goregister')
+		return redirect('/goregister')
 	else:
 		user = User.objects.create()
 		user.first_name = request.POST['first_name']
