@@ -2,11 +2,18 @@ from __future__ import unicode_literals
 
 from django.db import models
 import re
+
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
-DATE_STR_REGEX = re.compile(r'^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+# DATE_STR_REGEX = re.compile(r'^[0-9]{2}-[0-9]{2}-[0-9]{4}$')
 # Create your models here.
 
 class UserManager(models.Manager):
+	def login_validator(self, postData):
+		errors = {}
+		if not EMAIL_REGEX.match(postData['email']) or len(postData['password']) < 8:
+			errors['email']="Please enter valid credentials."
+		return errors
+
 	def basic_validator(self, postData):
 		errors = {}
 # VALIDATING THE FIRST NAME
@@ -20,25 +27,25 @@ class UserManager(models.Manager):
 			errors['email']="Please enter a valid email"
 
 # VALIDATING BIRTHDAY
-		if len(postData['dob']) == 0:
-			errors['dob']= 'Please enter your date of birth.'
-		elif not DATE_STR_REGEX.match(postData['dob']):
-			errors['dob']= "Please use date picker."
-		else:
-			try:
-				dob = datetime.datetime.strptime(postData['dob'], "%Y-%m-%d")
-				cutoff_date = datetime.datetime.now() - datetime.timedelta(days=18*365)
-				now = datetime.datetime.now()
+		# if len(postData['dob']) == 0:
+		# 	errors['dob']= 'Please enter your date of birth.'
+		# elif not DATE_STR_REGEX.match(postData['dob']):
+		# 	errors['dob']= "Please use date picker."
+		# else:
+		# 	try:
+		# 		dob = datetime.datetime.strptime(postData['dob'], "%m-%d-%Y")
+		# 		cutoff_date = datetime.datetime.now() - datetime.timedelta(days=18*365)
+		# 		now = datetime.datetime.now()
 
-				if dob > now:
-					errors['doberror']="You cannot be born in the future."
+		# 		if dob > now:
+		# 			errors['doberror']="You cannot be born in the future."
 
-				if dob > cutoff_date:
-					errors['doberror1']="You must be 18 join this site."
+		# 		if dob > cutoff_date:
+		# 			errors['doberror1']="You must be 18 join this site."
 
-			except Exception as date_error:
-				print date_error
-				errors['doberror2']='Please use the date picker.'
+		# 	except Exception as date_error:
+		# 		print date_error
+		# 		errors['doberror2']='Please use the date picker.'
 
 # VALIDATING PASSWORD
 		if len(postData['password']) == 0:
@@ -65,9 +72,10 @@ class User(models.Model):
 	first_name = models.CharField(max_length=255)
 	last_name = models.CharField(max_length=255)
 	email = models.CharField(max_length=255)
+	# dob = models.DateField(auto_now=False, auto_now_add=False)
 	password = models.CharField(max_length=255)
 	created_at = models.DateTimeField(auto_now_add = True)
 	updated_at = models.DateTimeField(auto_now = True)
 	objects = UserManager()
 	def __repr__(self):
-		return ("<User object: id:{} {} {}>".format(self.id, self.name, self.email))
+		return ("<User object: id:{} {} {}>".format(self.id, self.first_name, self.last_name))

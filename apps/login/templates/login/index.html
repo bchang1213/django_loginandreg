@@ -30,6 +30,7 @@
 	{% endif %}
 
 	<form action="/register" method="POST">
+		{% csrf_token %}
 		<fieldset>
 			<legend>Register</legend>
 			<label>First Name:
@@ -41,9 +42,9 @@
 			<label>Email:
 				<input type="text" name="email">
 			</label>
-			<label>Birthday:
+<!-- 			<label>Birthday:
 				<input type="date" name="dob">
-			</label>
+			</label> -->
 			<label>Password:
 				<input type="text" name="password">
 			</label>
@@ -56,6 +57,7 @@
 		</fieldset>
 	</form>
 	<form action="/login" method="POST">
+		{% csrf_token %}
 		<fieldset>
 			<legend>Login</legend>
 			<label>Email:
