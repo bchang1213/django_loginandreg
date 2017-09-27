@@ -1,0 +1,46 @@
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+h5{
+	font-size: 8px;
+}
+
+header{
+	border-bottom: 2px solid black;
+}
+
+header h4, a{
+	display: inline;
+}
+
+a.signin{
+	margin-left: 330px;
+}
+
+div.banner{
+	background-color: #DDDDDD;
+	width: 400px;
+	margin-top: 10px;
+	margin-left: 100px;
+}
+
+div.info{
+	display: inline-block;
+	width: 100px;
+	vertical-align: top;
+}
+
+p{
+	font-size: 8px;
+}
+
+div.infoboxes{
+	margin-left: 100px;
+	margin-top: 20px;
+}
+
+div.info:nth-child(2), div.info:nth-child(3) {
+	margin-left: 40px;
+}

@@ -3,30 +3,36 @@
 <head>
 	<meta charset="utf-8">
 	<title>Home Page</title>
+	{% load static %}
+<!-- The line above tells Django to be ready to listen for static files -->
+	<link rel="stylesheet" href="{% static 'login/css/style.css' %}" media="screen" title="no title"  charset="utf-8">
+<!-- Put the static files in the static folder inside your app.  Django collects files within all static folders and puts them within a single folder --> 
 </head>
 <body>
 	<div class='container'>
 		<header>
-			<h3>Test App</h3>
+			<h4>Test App</h4>
 			<a href="/">Home</a>
-			<a href="/signin">Sign In</a>
+			<a href="/signin" class="signin">Sign In</a>
 		</header>
 		<main>
 			<div class='banner'>
 				<h4>Welcome to the Test</h4>
 				<p>We're goign to build a cool application using an MTV framework! This application was built with Django by Brian Chang.</p>
 			</div>
-			<div class="info">
-				<h4>Manage Users</h4>
-				<p>Using this application, you'll learn how to add, remove, and edit users for the application.</p>
-			</div>
-			<div class="info">
-				<h4>Leave Messages</h4>
-				<p>Users will be able to leave a message to another user using the application.</p>
-			</div>
-			<div class="info">
-				<h4>Edit User Information</h4>
-				<p>Admins will be able to edit another user's information (email address, first name, last name, etc.)</p>
+			<div class="infoboxes">
+				<div class="info">
+					<h5>Manage Users</h5>
+					<p>Using this application, you'll learn how to add, remove, and edit users for the application.</p>
+				</div>
+				<div class="info">
+					<h5>Leave Messages</h5>
+					<p>Users will be able to leave a message to another user using the application.</p>
+				</div>
+				<div class="info">
+					<h5>Edit User Information</h5>
+					<p>Admins will be able to edit another user's information (email address, first name, last name, etc.)</p>
+				</div>
 			</div>
 		</main>
 	</div>
